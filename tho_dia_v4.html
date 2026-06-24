@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thổ Địa Campaign — Q12 & Gò Vấp 2026</title>
+<style>
+  :root {
+    --bg: #f7f8fc; --bg2: #ffffff; --bg3: #f1f3f8;
+    --border: #e2e6f0; --border2: #cdd3e8;
+    --q12: #e85d2f; --q12l: #fff3ef; --q12b: #fde0d5;
+    --gv: #2563eb; --gvl: #eff4ff; --gvb: #dbeafe;
+    --green: #0a8f6c; --greenl: #ecfdf5; --greenb: #a7f3d0;
+    --yellow: #c48a00; --yellowl: #fffbeb; --yellowb: #fde68a;
+    --purple: #6d28d9; --purplel: #f5f3ff; --purpleb: #ddd6fe;
+    --red: #dc2626; --text: #1a1f36; --text2: #4b5470; --text3: #8892b0;
+    --shadow: 0 1px 3px rgba(26,31,54,0.08); --shadow-md: 0 4px 16px rgba(26,31,54,0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(247,248,252,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 10px 28px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .nav-brand { font-weight: 800; font-size: 13px; color: var(--q12); margin-right: 8px; }
+  .nav-links { display: flex; gap: 3px; flex-wrap: wrap; }
+  .nav-links a { color: var(--text3); text-decoration: none; font-size: 12px; font-weight: 500; padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+  .nav-links a:hover { background: var(--bg3); color: var(--text); }
+  .hero { padding: 44px 28px 32px; max-width: 1280px; margin: 0 auto; }
+  .hero-tag { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--q12); font-weight: 700; margin-bottom: 8px; }
+  .hero h1 { font-size: clamp(22px, 3vw, 36px); font-weight: 800; line-height: 1.2; margin-bottom: 18px; }
+  .hero h1 em { color: var(--q12); font-style: normal; }
+  .hero-stats { display: flex; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); flex-wrap: wrap; }
+  .hs { padding: 14px 22px; border-right: 1px solid var(--border); flex: 1; min-width: 100px; }
+  .hs:last-child { border-right: none; }
+  .hs .val { font-size: 20px; font-weight: 800; color: var(--text); line-height: 1; }
+  .hs .val.o { color: var(--q12); }
+  .hs .lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
+  .sec { max-width: 1280px; margin: 0 auto; padding: 36px 28px; }
+  .sec + .sec { border-top: 1px solid var(--border); }
+  .eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); font-weight: 700; margin-bottom: 5px; }
+  .heading { font-size: 19px; font-weight: 700; margin-bottom: 20px; }
+  .tabs { display: flex; gap: 3px; background: var(--bg3); padding: 3px; border-radius: 9px; width: fit-content; margin-bottom: 18px; }
+  .tab { padding: 7px 18px; border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text2); border: none; background: transparent; transition: all 0.15s; }
+  .tab.active { background: var(--bg2); box-shadow: var(--shadow); }
+  .tq.active { color: var(--q12); } .tg.active { color: var(--gv); }
+  .tab-pane { display: none; } .tab-pane.active { display: block; }
+  .tl-wrap { overflow-x: auto; }
+  .tl-tbl { width: 100%; min-width: 800px; border-collapse: collapse; font-size: 12px; }
+  .tl-tbl th { padding: 8px 10px; background: var(--bg3); font-size: 11px; font-weight: 700; color: var(--text2); text-align: center; border: 1px solid var(--border); white-space: nowrap; }
+  .tl-tbl th.row-h { text-align: left; }
+  .tl-tbl td { padding: 6px 8px; border: 1px solid var(--border); text-align: center; vertical-align: middle; }
+  .tl-tbl td.row-lbl { text-align: left; font-weight: 600; color: var(--text2); font-size: 11px; background: var(--bg3); white-space: nowrap; padding-left: 10px; }
+  .tl-tbl tr.phase-row td { background: var(--bg3); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; text-align: center; border-color: var(--border); }
+  .tl-tbl tr.total-row td { font-weight: 800; font-size: 12px; background: var(--bg3); }
+  .tl-tbl tr.total-row td.row-lbl { font-weight: 700; }
+  .tl-tbl tr.metric-row td { font-size: 11px; color: var(--text2); background: var(--bg2); }
+  .tl-tbl tr.metric-row td.row-lbl { color: var(--text2); font-weight: 500; font-size: 11px; }
+  .ph-boom { background: #fffbe6 !important; color: #a16207 !important; }
+  .ph-amp { background: #f0fdf4 !important; color: #166534 !important; }
+  .ph-maint { background: var(--bg3) !important; color: var(--text3) !important; font-style: italic; }
+  .ph-prep { background: #f8f9fc !important; color: var(--text3) !important; font-style: italic; }
+  .c-ooh-h { background: linear-gradient(135deg,#c93d14,#e85d2f) !important; color:#fff !important; font-weight:700; font-size:11px; }
+  .c-ooh-m { background: var(--q12b) !important; color: #c44820 !important; }
+  .c-ooh-l { background: var(--q12l) !important; color: #d15a30 !important; }
+  .c-gv-ooh-h { background: linear-gradient(135deg,#1d4ed8,#2563eb) !important; color:#fff !important; font-weight:700; font-size:11px; }
+  .c-gv-ooh-m { background: var(--gvb) !important; color: var(--gv) !important; }
+  .c-gv-ooh-l { background: var(--gvl) !important; color: var(--gv) !important; }
+  .c-social { background: var(--purplel) !important; color: var(--purple) !important; }
+  .c-gvsocial { background: var(--gvl) !important; color: var(--gv) !important; }
+  .c-dig { background: var(--greenl) !important; color: var(--green) !important; }
+  .c-local { background: var(--yellowl) !important; color: var(--yellow) !important; }
+  .c-empty { background: var(--bg3) !important; color: var(--text3) !important; font-size: 10px; }
+  .c-total-q12 { color: var(--q12) !important; } .c-total-gv { color: var(--gv) !important; }
+  .c-metric-dwl { color: var(--green) !important; font-weight: 700 !important; }
+  .c-metric-lead { color: var(--gv) !important; font-weight: 700 !important; }
+  .budget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:768px) { .budget-grid { grid-template-columns: 1fr; } }
+  .bc { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); }
+  .bc-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .bc-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .bar-row { margin-bottom: 10px; }
+  .bar-lbl { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 12px; color: var(--text2); }
+  .bar-lbl .amt { font-weight: 700; color: var(--text); }
+  .bar-track { height: 7px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; transition: width 0.9s cubic-bezier(.22,.68,0,1.2); }
+  .bf-q12 { background: linear-gradient(90deg,#e85d2f,#f4a47c); }
+  .bf-gv { background: linear-gradient(90deg,#2563eb,#60a5fa); }
+  .bf-soc { background: var(--purple); } .bf-dig { background: var(--green); } .bf-loc { background: var(--yellow); }
+  .bc-total { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; }
+  .bc-note { font-size: 11px; color: var(--text3); margin-top: 6px; }
+  .grand-total { margin-top: 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; box-shadow: var(--shadow); }
+  .ov-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  @media(max-width:768px) { .ov-grid { grid-template-columns: 1fr; } }
+  .ov-c { border-radius: 10px; padding: 16px; }
+  .ov-q12 { background: var(--q12l); border: 1px solid var(--q12b); }
+  .ov-gv { background: var(--gvl); border: 1px solid var(--gvb); }
+  .ov-title { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+  .ov-item { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 12px; color: var(--text2); }
+  .ov-item:last-child { border-bottom: none; }
+  .phase-funnel { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+  @media(max-width:768px) { .phase-funnel { grid-template-columns: 1fr; } }
+  .pf-c { border-radius: 10px; padding: 16px; }
+  .pf-boom { background: #fffbe6; border: 1px solid #fde68a; }
+  .pf-amp { background: var(--greenl); border: 1px solid var(--greenb); }
+  .pf-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .pf-label-boom { color: #a16207; } .pf-label-amp { color: #166534; }
+  .pf-name { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .pf-split { display: flex; gap: 14px; margin-bottom: 10px; }
+  .pf-block .pct { font-size: 26px; font-weight: 800; line-height: 1; }
+  .pf-block .pl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
+  .pf-desc { font-size: 12px; color: var(--text2); margin-bottom: 10px; line-height: 1.55; }
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 99px; }
+  .chip-ooh { background: var(--q12l); color: var(--q12); border: 1px solid var(--q12b); }
+  .chip-soc { background: var(--purplel); color: var(--purple); border: 1px solid var(--purpleb); }
+  .chip-dig { background: var(--greenl); color: var(--green); border: 1px solid var(--greenb); }
+  .chip-loc { background: var(--yellowl); color: var(--yellow); border: 1px solid var(--yellowb); }
+  .meas-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  @media(max-width:768px) { .meas-grid { grid-template-columns: 1fr; } }
+  .meas-c { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; box-shadow: var(--shadow); }
+  .mbadge { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; margin-bottom: 8px; }
+  .mb-d { background: var(--greenl); color: var(--green); border: 1px solid var(--greenb); }
+  .mb-s { background: var(--yellowl); color: var(--yellow); border: 1px solid var(--yellowb); }
+  .mb-p { background: var(--gvl); color: var(--gv); border: 1px solid var(--gvb); }
+  .meas-title { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+  .meas-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+  .freq-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .freq-tbl th { text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); border-bottom: 2px solid var(--border); }
+  .freq-tbl td { padding: 9px 10px; border-bottom: 1px solid var(--bg3); color: var(--text2); vertical-align: top; }
+  .freq-tbl td:first-child { font-weight: 600; color: var(--text); }
+  .freq-tbl tr:last-child td { border-bottom: none; }
+  .freq-tbl tr:hover td { background: var(--bg3); }
+  .fr-hl td { background: #fff8f5 !important; }
+  .layer-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  @media(max-width:768px) { .layer-grid { grid-template-columns: 1fr; } }
+  .lc { border-radius: 10px; padding: 16px 18px; }
+  .lc-2 { background: var(--q12l); border: 1px solid var(--q12b); }
+  .lc-3 { background: var(--yellowl); border: 1px solid var(--yellowb); }
+  .lc-1 { background: var(--gvl); border: 1px solid var(--gvb); }
+  .lc-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 99px; margin-bottom: 6px; color: #fff; }
+  .lb2 { background: var(--q12); } .lb3 { background: var(--yellow); } .lb1 { background: var(--gv); }
+  .priority-pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 99px; float: right; }
+  .pp-must { background: #fee2e2; color: var(--red); }
+  .pp-need { background: var(--gvl); color: var(--gv); }
+  .pp-nice { background: var(--bg3); color: var(--text3); }
+  .lc-name { font-size: 13px; font-weight: 700; margin-bottom: 5px; clear: both; }
+  .lc-where { font-size: 11px; color: var(--text2); margin-bottom: 8px; line-height: 1.45; }
+  .lc-rules { list-style: none; }
+  .lc-rules li { font-size: 11px; color: var(--text2); padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; gap: 6px; }
+  .lc-rules li:last-child { border-bottom: none; }
+  .lc-rules li::before { content: '→'; color: var(--text3); flex-shrink: 0; }
+  .cp-list { list-style: none; }
+  .cp-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--bg3); }
+  .cp-item:last-child { border-bottom: none; }
+  .cp-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .dot-r { background: var(--red); } .dot-w { background: var(--yellow); } .dot-g { background: var(--green); }
+  .cp-date { font-size: 11px; font-weight: 700; color: var(--yellow); white-space: nowrap; min-width: 70px; }
+  .cp-task { font-size: 12px; color: var(--text); }
+  .cp-risk { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width:768px) { .two-col { grid-template-columns: 1fr; } }
+  .callout { border-radius: 10px; padding: 13px 15px; margin-top: 14px; }
+  .co { background: var(--q12l); border: 1px solid var(--q12b); }
+  .cg { background: var(--gvl); border: 1px solid var(--gvb); }
+  .ct { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+  .ct-o { color: var(--q12); } .ct-b { color: var(--gv); }
+  .callout p { font-size: 12px; color: var(--text2); line-height: 1.55; }
+  .note { font-size: 11px; color: var(--text3); margin-top: 8px; }
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 18px; box-shadow: var(--shadow); }
+  .appendix-banner { max-width: 1280px; margin: 0 auto; padding: 36px 28px 0; }
+  .appendix-inner { border: 2px dashed var(--border2); border-radius: 12px; padding: 16px 24px; background: var(--bg3); text-align: center; }
+  .appendix-label { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3); }
+  .appendix-desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+  [data-tip] { position: relative; cursor: default; }
+  [data-tip]:hover::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1a1f36; color: #fff; font-size: 11px; padding: 5px 9px; border-radius: 6px; white-space: nowrap; z-index: 200; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">🏠 Thổ Địa 2026</div>
+  <div class="nav-links">
+    <a onclick="g('timeline')">Timeline</a>
+    <a onclick="g('budget')">Budget</a>
+    <a onclick="g('measure')">Đo lường</a>
+    <a onclick="g('layers')">OOH Layers</a>
+    <a onclick="g('critical')">Critical Path</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Nhà Tốt · Hyperlocal Campaign</div>
+  <h1>Chiến lược Thổ Địa — <em>Q12 & Gò Vấp</em> 2026</h1>
+  <div class="hero-stats">
+    <div class="hs"><div class="val o">6,000M</div><div class="lbl">Tổng Budget</div></div>
+    <div class="hs"><div class="val">2</div><div class="lbl">Quận</div></div>
+    <div class="hs"><div class="val">Jul 13</div><div class="lbl">Q12 Big Boom</div></div>
+    <div class="hs"><div class="val">Oct 13</div><div class="lbl">GV Big Boom</div></div>
+    <div class="hs"><div class="val">L2 → L3 → L1</div><div class="lbl">OOH Priority</div></div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="sec" id="timeline">
+  <div class="eyebrow">Campaign Overview</div>
+  <div class="heading">Timeline & Phase Map</div>
+  <div class="tabs">
+    <button class="tab tq active" onclick="switchTab('q12')">Q12 — Quận 12</button>
+    <button class="tab tg" onclick="switchTab('gv')">Gò Vấp</button>
+  </div>
+
+  <!-- Q12 -->
+  <div id="tab-q12" class="tab-pane active">
+    <div class="tl-wrap">
+      <table class="tl-tbl">
+        <thead>
+          <tr>
+            <th class="row-h" style="width:90px">Channel</th>
+            <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Jan '27</th><th>Feb '27</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="phase-row">
+            <td class="row-lbl">Phase</td>
+            <td colspan="2" class="ph-boom">🔥 Big Boom</td>
+            <td colspan="2" class="ph-amp">📈 Amplify</td>
+            <td colspan="4" class="ph-maint">Maintain / Autopilot</td>
+          </tr>
+          <tr>
+            <td class="row-lbl">Local Data</td>
+            <td class="c-local" data-tip="70M — Agent seeding, 10+ agent onboard, video series bắt đầu">70M</td>
+            <td class="c-local" data-tip="80M — UGC expansion, 30+ video live, agent showcase">80M</td>
+            <td class="c-empty">UGC</td>
+            <td class="c-empty">—</td><td class="c-empty">—</td><td class="c-empty">—</td><td class="c-empty">—</td><td class="c-empty">—</td>
+          </tr>
+          <tr>
+            <td class="row-lbl">OOH</td>
+            <td class="c-ooh-m" data-tip="300M — L2+L1 Teaser. BOOK 30/6!">300M<br><small>L2+L1</small></td>
+            <td class="c-ooh-h" data-tip="1,000M — L2+L1+L3 full. Book trước 10/7!">1,000M<br><small>🔥 Full</small></td>
+            <td class="c-ooh-m" data-tip="500M — L2 + L1 sustained">500M</td>
+            <td class="c-ooh-m" data-tip="500M — L2 + L1 amplify">500M</td>
+            <td class="c-ooh-l" data-tip="200M — L2 only">200M</td>
+            <td class="c-ooh-l" data-tip="200M — L2 minimal">200M</td>
+            <td class="c-empty">—</td><td class="c-empty">—</td>
+          </tr>
+          <tr>
+            <td class="row-lbl">Social</td>
+            <td class="c-social" data-tip="100M — Seeding + UGC agent">100M</td>
+            <td class="c-social" data-tip="50M — Storytelling, social proof">50M</td>
+            <td class="c-social" data-tip="25M">25M</td>
+            <td class="c-social" data-tip="25M">25M</td>
+            <td class="c-social" data-tip="25M">25M</td>
+            <td class="c-social" data-tip="25M">25M</td>
+            <td class="c-empty">—</td><td class="c-empty">—</td>
+          </tr>
+          <tr>
+            <td class="row-lbl">Digital</td>
+            <td class="c-dig" data-tip="100M — Always-on D1. Geo: Mass HCMC for-sale intent. Build pool + convert hot audience">100M</td>
+            <td class="c-dig" data-tip="100M — Retargeting heavy. Geo: Mass HCMC. Conversion focus">100M</td>
+            <td class="c-dig" data-tip="50M — Retargeting pool đã warm từ Jul–Aug, audience ready. Giảm budget vẫn convert hiệu quả. Geo: Mass HCMC">50M</td>
+            <td class="c-dig" data-tip="50M — Warm audience từ Big Boom phase. Conversion-focus, không cần scale budget. Geo: Mass HCMC">50M</td>
+            <td class="c-dig" data-tip="50M — Auto rules. Geo: Mass HCMC">50M</td>
+            <td class="c-dig" data-tip="50M — Auto rules. Geo: Mass HCMC">50M</td>
+            <td class="c-empty">—</td><td class="c-empty">—</td>
+          </tr>
+          <tr class="total-row">
+            <td class="row-lbl">TOTAL COST</td>
+            <td class="c-total-q12">570M</td>
+            <td class="c-total-q12" style="font-size:13px">1,230M</td>
+            <td class="c-total-q12">575M</td>
+            <td class="c-total-q12">575M</td>
+            <td class="c-total-q12">275M</td>
+            <td class="c-total-q12">275M</td>
+            <td style="color:var(--text3);font-weight:400">—</td>
+            <td style="color:var(--text3);font-weight:400">—</td>
+          </tr>
+          <tr class="metric-row">
+            <td class="row-lbl">DwL (Q12 FS)</td>
+            <td class="c-metric-dwl" data-tip="Budget for-sale ~30M/tháng ÷ 10K">~3,000</td>
+            <td class="c-metric-dwl" data-tip="~30M ÷ 10K">~3,000</td>
+            <td class="c-metric-dwl" data-tip="~15M ÷ 10K">~1,500</td>
+            <td class="c-metric-dwl" data-tip="~15M ÷ 10K">~1,500</td>
+            <td class="c-metric-dwl" data-tip="~15M ÷ 10K">~1,500</td>
+            <td class="c-metric-dwl" data-tip="~15M ÷ 10K">~1,500</td>
+            <td style="color:var(--text3)">—</td><td style="color:var(--text3)">—</td>
+          </tr>
+          <tr class="metric-row">
+            <td class="row-lbl">Lead (Q12 FS)</td>
+            <td class="c-metric-lead" data-tip="~30M ÷ 5K">~6,000</td>
+            <td class="c-metric-lead" data-tip="~30M ÷ 5K">~6,000</td>
+            <td class="c-metric-lead" data-tip="~15M ÷ 5K">~3,000</td>
+            <td class="c-metric-lead" data-tip="~15M ÷ 5K">~3,000</td>
+            <td class="c-metric-lead" data-tip="~15M ÷ 5K">~3,000</td>
+            <td class="c-metric-lead" data-tip="~15M ÷ 5K">~3,000</td>
+            <td style="color:var(--text3)">—</td><td style="color:var(--text3)">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">* DwL & Lead estimate: ~30% digital budget allocated for Q12 for-sale targeting. Cost per DwL: 10K, Cost per Lead: 5K. Total: ~12,000 DwL / ~24,000 Leads trong 6 tháng.</div>
+    <div class="callout co" style="margin-top:12px">
+      <div class="ct ct-o">⚡ Dual Strategy: OOH Q12 Physical Presence × Digital Mass HCMC — từ ngày 1</div>
+      <p>Không chờ awareness xong mới action — Digital chạy ngay từ ngày 1, retarget user có intent signal (click, engagement) trong 24–48h. <strong>OOH Q12</strong> = physical presence & social proof cho cộng đồng địa phương, tạo trust signal địa lý. <strong>Digital</strong> = mass HCMC reach, target buyers toàn thành phố đang tìm for-sale dưới 7 tỷ — không giới hạn Q12. Hai kênh cộng hưởng: OOH heavy tháng 8 gặp audience đã warm từ tháng 7, physical touchpoint reinforce digital message.</p>
+    </div>
+  </div>
+
+  <!-- GV -->
+  <div id="tab-gv" class="tab-pane">
+    <div class="tl-wrap">
+      <table class="tl-tbl">
+        <thead>
+          <tr>
+            <th class="row-h" style="width:90px">Channel</th>
+            <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Jan '27</th><th>Feb '27</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="phase-row">
+            <td class="row-lbl">Phase</td>
+            <td colspan="3" class="ph-prep">Pre-prep (parallel)</td>
+            <td colspan="2" class="ph-boom">🔥 Big Boom</td>
+            <td colspan="3" class="ph-amp">📈 Amplify</td>
+          </tr>
+          <tr>
+            <td class="row-lbl">Local Data</td>
+            <td class="c-empty" data-tip="Scout GV agent clusters song song với Q12">scout</td>
+            <td class="c-empty" data-tip="Scout tiếp, pre-onboard">scout</td>
+            <td class="c-empty" data-tip="Pre-onboard agent GV, dùng Q12 template">pre</td>
+            <td class="c-local" data-tip="50M — Onboard agent GV, 20+ video">50M</td>
+            <td class="c-local" data-tip="50M — Mở rộng UGC GV">50M</td>
+            <td class="c-empty">UGC</td>
+            <td class="c-empty">—</td><td class="c-empty">—</td>
+          </tr>
+          <tr>
+            <td class="row-lbl">OOH</td>
+            <td class="c-empty">—</td><td class="c-empty">—</td>
+            <td class="c-empty" data-tip="Book OOH Nov trước 30/9">📋 book</td>
+            <td class="c-gv-ooh-l" data-tip="300M — L1+L2 lite teaser. BOOK 30/9!">300M<br><small>L2+L1</small></td>
+            <td class="c-gv-ooh-h" data-tip="1,000M — L2+L1+L3 full">1,000M<br><small>🔥 Full</small></td>
+            <td class="c-gv-ooh-m" data-tip="300M — Sustained">300M</td>
+            <td class="c-gv-ooh-m" data-tip="300M — Amplify">300M</td>
+            <td class="c-gv-ooh-l" data-tip="300M — L2 maintain">300M</td>
+          </tr>
+          <tr>
+            <td class="row-lbl">Social</td>
+            <td class="c-empty">—</td><td class="c-empty">—</td>
+            <td class="c-empty" data-tip="Teaser nhẹ, dùng Q12 spillover">teaser</td>
+            <td class="c-gvsocial" data-tip="100M — Seeding + teaser GV">100M</td>
+            <td class="c-gvsocial" data-tip="50M — Big boom social">50M</td>
+            <td class="c-gvsocial" data-tip="25M">25M</td>
+            <td class="c-gvsocial" data-tip="25M">25M</td>
+            <td class="c-empty">—</td>
+          </tr>
+          <tr>
+            <td class="row-lbl">Digital</td>
+            <td class="c-empty">—</td><td class="c-empty">—</td>
+            <td class="c-dig" data-tip="Lookalike warm-up từ Q12 pool, không tốn budget riêng" style="font-size:10px">lookalike</td>
+            <td class="c-dig" data-tip="100M — Always-on từ launch. Geo: Mass HCMC">100M</td>
+            <td class="c-dig" data-tip="100M — Full conversion. Geo: Mass HCMC">100M</td>
+            <td class="c-dig" data-tip="50M — Amplify. Geo: Mass HCMC">50M</td>
+            <td class="c-dig" data-tip="50M — Auto. Geo: Mass HCMC">50M</td>
+            <td class="c-dig" data-tip="50M — Auto. Geo: Mass HCMC">50M</td>
+          </tr>
+          <tr class="total-row">
+            <td class="row-lbl">TOTAL COST</td>
+            <td style="color:var(--text3);font-weight:400">—</td>
+            <td style="color:var(--text3);font-weight:400">—</td>
+            <td style="color:var(--text3);font-weight:400">—</td>
+            <td class="c-total-gv">550M</td>
+            <td class="c-total-gv" style="font-size:13px">1,200M</td>
+            <td class="c-total-gv">375M</td>
+            <td class="c-total-gv">375M</td>
+            <td class="c-total-gv">350M</td>
+          </tr>
+          <tr class="metric-row">
+            <td class="row-lbl">DwL (GV FS)</td>
+            <td style="color:var(--text3)">—</td><td style="color:var(--text3)">—</td><td style="color:var(--text3)">—</td>
+            <td class="c-metric-dwl" data-tip="~30M ÷ 10K">~3,000</td>
+            <td class="c-metric-dwl" data-tip="~30M ÷ 10K">~3,000</td>
+            <td class="c-metric-dwl" data-tip="~15M ÷ 10K">~1,500</td>
+            <td class="c-metric-dwl" data-tip="~15M ÷ 10K">~1,500</td>
+            <td class="c-metric-dwl" data-tip="~15M ÷ 10K">~1,500</td>
+          </tr>
+          <tr class="metric-row">
+            <td class="row-lbl">Lead (GV FS)</td>
+            <td style="color:var(--text3)">—</td><td style="color:var(--text3)">—</td><td style="color:var(--text3)">—</td>
+            <td class="c-metric-lead" data-tip="~30M ÷ 5K">~6,000</td>
+            <td class="c-metric-lead" data-tip="~30M ÷ 5K">~6,000</td>
+            <td class="c-metric-lead" data-tip="~15M ÷ 5K">~3,000</td>
+            <td class="c-metric-lead" data-tip="~15M ÷ 5K">~3,000</td>
+            <td class="c-metric-lead" data-tip="~15M ÷ 5K">~3,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">* DwL & Lead GV estimate: ~30M/tháng for-sale digital. Cost per DwL: 10K, Cost per Lead: 5K. Total GV: ~12,000 DwL / ~24,000 Leads trong 5 tháng (Oct–Feb).</div>
+    <div class="callout cg" style="margin-top:12px">
+      <div class="ct ct-b">💡 GV: Tận dụng Q12 Assets</div>
+      <p>Lookalike từ Q12 for-sale converters → warm pool trước GV launch. Q12/GV border users không suppress — dùng làm early adopter signal. Agent brief template, OOH location scouting tái sử dụng → tiết kiệm ~30% prep time.</p>
+    </div>
+  </div>
+
+  <!-- % USERS PER PHASE -->
+  <div style="margin-top:28px">
+    <div class="eyebrow" style="margin-bottom:8px">% Users per Phase — Q12</div>
+    <div class="phase-funnel">
+      <div class="pf-c pf-boom">
+        <div class="pf-label pf-label-boom">Phase 1 — Big Boom (Jul–Aug)</div>
+        <div class="pf-name">Awareness + Convert đồng thời</div>
+        <div class="pf-split">
+          <div class="pf-block"><div class="pct" style="color:var(--q12)">75%</div><div class="pl">Awareness only</div></div>
+          <div class="pf-block"><div class="pct" style="color:var(--yellow)">20%</div><div class="pl">Consideration</div></div>
+          <div class="pf-block"><div class="pct" style="color:var(--green);font-size:20px">5%</div><div class="pl">Action ngay</div></div>
+        </div>
+        <div class="pf-desc">Social + OOH teaser (Jul) tạo reach. Digital không chờ — retarget nhóm có intent signal trong 24–48h. OOH full blast (Aug) lock in brand recall. Nhóm 5% convert ngay trong Big Boom window.</div>
+        <div class="chips">
+          <div class="chip chip-soc">Social seeding</div>
+          <div class="chip chip-ooh">OOH L2+L3+L1 Full</div>
+          <div class="chip chip-dig">Digital D+1</div>
+          <div class="chip chip-loc">Agent UGC</div>
+        </div>
+      </div>
+      <div class="pf-c pf-amp">
+        <div class="pf-label pf-label-amp">Phase 2 — Amplify (Sep–Oct)</div>
+        <div class="pf-name">Cộng hưởng & Convert tiếp</div>
+        <div class="pf-split">
+          <div class="pf-block"><div class="pct" style="color:var(--yellow);font-size:20px">60%</div><div class="pl">Đã aware</div></div>
+          <div class="pf-block"><div class="pct" style="color:var(--gv);font-size:20px">30%</div><div class="pl">Consideration</div></div>
+          <div class="pf-block"><div class="pct" style="color:var(--green);font-size:20px">10%</div><div class="pl">Convert</div></div>
+        </div>
+        <div class="pf-desc">OOH sustained gặp audience đã warm 2 tháng. Effective freq ≥ 10x/2 tháng đạt brand recall (high-involvement category). Digital pivot sang conversion-focus.</div>
+        <div class="chips">
+          <div class="chip chip-ooh">OOH L2+L1 Sustained</div>
+          <div class="chip chip-dig">Digital conversion</div>
+          <div class="chip chip-soc">Social proof</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUDGET -->
+<div class="sec" id="budget">
+  <div class="eyebrow">Financial Plan</div>
+  <div class="heading">Budget Allocation</div>
+  <div class="budget-grid">
+    <div class="bc">
+      <div class="bc-title"><div class="bc-dot" style="background:var(--q12)"></div>Q12 — Total: 3,500M</div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>OOH (L2 mandatory + L1 backbone + L3)</span><span class="amt">2,700M</span></div>
+        <div class="bar-track"><div class="bar-fill bf-q12" style="width:77%"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>Social</span><span class="amt">250M</span></div>
+        <div class="bar-track"><div class="bar-fill bf-soc" style="width:7%"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>Digital (always-on từ ngày 1)</span><span class="amt">400M</span></div>
+        <div class="bar-track"><div class="bar-fill bf-dig" style="width:11%"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>Local Data</span><span class="amt">150M</span></div>
+        <div class="bar-track"><div class="bar-fill bf-loc" style="width:4%"></div></div>
+      </div>
+      <div class="bc-total"><span>Total</span><span style="color:var(--q12)">3,500M</span></div>
+      <div class="bc-note">OOH 77% — hyperlocal dominance. Digital 11% always-on mass HCMC. Local Data 4% là foundation credibility trên product.</div>
+    </div>
+    <div class="bc">
+      <div class="bc-title"><div class="bc-dot" style="background:var(--gv)"></div>Gò Vấp — Total: 2,500M</div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>OOH (L2 mandatory + L1 backbone + L3)</span><span class="amt">1,900M</span></div>
+        <div class="bar-track"><div class="bar-fill bf-gv" style="width:76%"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>Social</span><span class="amt">200M</span></div>
+        <div class="bar-track"><div class="bar-fill bf-soc" style="width:8%"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>Digital (always-on)</span><span class="amt">300M</span></div>
+        <div class="bar-track"><div class="bar-fill bf-dig" style="width:12%"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl"><span>Local Data</span><span class="amt">100M</span></div>
+        <div class="bar-track"><div class="bar-fill bf-loc" style="width:4%"></div></div>
+      </div>
+      <div class="bc-total"><span>Total</span><span style="color:var(--gv)">2,500M</span></div>
+      <div class="bc-note">Q12 learnings → lower cold-start cost. Lookalike pool reduces CPA ~15%.</div>
+    </div>
+  </div>
+  <div class="grand-total">
+    <div style="font-size:13px;font-weight:700">Grand Total</div>
+    <div style="font-size:12px;color:var(--text2)">Q12: 3,500M &nbsp;+&nbsp; GV: 2,500M</div>
+    <div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px;font-weight:800;color:var(--q12)">6,000M</span><span style="font-size:12px;color:var(--green);font-weight:700">✓ Đúng ngân sách</span></div>
+  </div>
+  <div style="margin-top:28px">
+    <div class="eyebrow" style="margin-bottom:8px">Oct–Nov Overlap: Q12 Maintain × GV Launch</div>
+    <div class="ov-grid">
+      <div class="ov-c ov-q12">
+        <div class="ov-title" style="color:var(--q12)">● Q12 — Autopilot Mode (Oct–Nov)</div>
+        <div class="ov-item"><span>⚙️</span><span>Digital chạy <strong>automated rules</strong> — không cần daily optimization</span></div>
+        <div class="ov-item"><span>📋</span><span>Social: 1 post/week từ <strong>content batch</strong> produce sẵn trong Sep</span></div>
+        <div class="ov-item"><span>📍</span><span>OOH lite — L2 only, giữ presence, không mua thêm pano mới</span></div>
+        <div class="ov-item"><span>👤</span><span><strong>1 người</strong> monitor metrics Q12, không cần full team</span></div>
+      </div>
+      <div class="ov-c ov-gv">
+        <div class="ov-title" style="color:var(--gv)">● Gò Vấp — Full Team Launch (Oct)</div>
+        <div class="ov-item"><span>♻️</span><span><strong>Reuse Q12 playbook</strong>: brief, OOH template, social structure → tiết kiệm ~30-40% prep</span></div>
+        <div class="ov-item"><span>🎯</span><span>Lookalike từ Q12 for-sale converters → GV warm pool trước big boom</span></div>
+        <div class="ov-item"><span>🗺️</span><span>User Q12/GV border <strong>không suppress</strong> — dùng làm early adopter signal</span></div>
+        <div class="ov-item"><span>🚀</span><span>Full team pivot GV từ đầu Oct — Q12 autopilot-ified xong từ Sep 30</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPENDIX DIVIDER -->
+<div class="appendix-banner">
+  <div class="appendix-inner">
+    <div class="appendix-label">── APPENDIX ──</div>
+    <div class="appendix-desc">Các nội dung từ đây trở xuống là tài liệu tham khảo & phân tích bổ sung.</div>
+  </div>
+</div>
+
+<!-- MEASUREMENT -->
+<div class="sec" id="measure">
+  <div class="eyebrow">Measurement Framework</div>
+  <div class="heading">Đo Lường OOH Cộng Hưởng</div>
+  <div class="meas-grid">
+    <div class="meas-c">
+      <div class="mbadge mb-d">Direct</div>
+      <div class="meas-title">QR + Branded Search Lift</div>
+      <div class="meas-desc">Mỗi pano unique QR UTM → track scans trực tiếp. "Nhà tốt quận 12" Google Trends — OOH Aug tốt → search tăng 2-3 tuần sau placement.</div>
+    </div>
+    <div class="meas-c">
+      <div class="mbadge mb-d">Direct</div>
+      <div class="meas-title">Geo-lift Analysis</div>
+      <div class="meas-desc">So sánh app install / lead từ Q12 postal codes vs districts đối chứng (Q9, Bình Thạnh). Spike = OOH contribution. Cross-validate với digital geo-targeting.</div>
+    </div>
+    <div class="meas-c">
+      <div class="mbadge mb-s">Survey</div>
+      <div class="meas-title">BHT — Aided/Unaided Recall</div>
+      <div class="meas-desc">Wave 1: W2 Aug (n≥200 Q12). Wave 2: W4 Aug sau OOH heavy. Target: Aided ≥50%, Unaided ≥20%. Nếu wave 1 &lt;30% → optimization trigger ngay.</div>
+    </div>
+    <div class="meas-c">
+      <div class="mbadge mb-p">Proxy</div>
+      <div class="meas-title">Retargeting Pool Growth</div>
+      <div class="meas-desc">OOH + Social hiệu quả → engagement tăng → retargeting pool lớn hơn. Track pool size W1 Jul → W4 Aug. Target: 3x growth.</div>
+    </div>
+    <div class="meas-c">
+      <div class="mbadge mb-p">Proxy</div>
+      <div class="meas-title">Reach → Action Funnel</div>
+      <div class="meas-desc">Reach → Impression (3s+) → Engagement → Click → App visit → DwL → Lead. Track % tại mỗi bước. OOH tháng 8 tốt → engagement W1 Aug &gt; Jul W4 baseline.</div>
+    </div>
+    <div class="meas-c">
+      <div class="mbadge mb-p">Proxy</div>
+      <div class="meas-title">CPR (Cost per Reach)</div>
+      <div class="meas-desc">Budget 8 tuần ÷ (Unique Reach/tháng × 2). So sánh efficiency giữa các OOH options. Input cho GV planning — optimize budget dựa trên Q12 learnings.</div>
+    </div>
+    <div class="meas-c" style="border-color:#f59e0b;background:#fffbeb;">
+      <div class="mbadge" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;">⚠️ Trust Signal</div>
+      <div class="meas-title">Visit → Lead Conversion Rate</div>
+      <div class="meas-desc">Track tỷ lệ app visit → lead submit sau Big Boom. Nếu reach tăng mạnh nhưng visit→lead rate <strong>không tăng tương ứng</strong> → đây là trust issue, không phải reach issue. Trigger: investigate listing quality (ảnh, giá, pháp lý), agent response rate. Không nên tăng OOH budget — phải fix product/listing trước.</div>
+    </div>
+  </div>
+  <div style="margin-top:24px">
+    <div class="eyebrow" style="margin-bottom:12px">OOH Frequency — Coverage Target Q12</div>
+    <div class="card">
+      <table class="freq-tbl">
+        <tr>
+          <th>Layer</th><th>Gross Freq/tháng</th><th>Effective Freq (×30%)</th><th>Target (2 tháng)</th><th>Optimization Signal</th>
+        </tr>
+        <tr class="fr-hl">
+          <td>L1 — Pano lớn (Trường Chinh)</td>
+          <td>OTS/tháng ÷ Unique Reach<br><small style="color:var(--text3)">~35-40x gross (220-320K OTS/ngày)</small></td>
+          <td><strong>~10-12x</strong></td>
+          <td>≥ 10x / 2 tháng<br><small style="color:var(--green)">≥ SEA benchmark</small></td>
+          <td>BHT W2 Aug. Recall &lt;30% → check placement</td>
+        </tr>
+        <tr>
+          <td>L2 — Đầu hẻm (hyper-local)</td>
+          <td>Footfall hẻm × 30 × 85% ÷ Unique Reach</td>
+          <td><strong>~15-20x</strong><br><small style="color:var(--text3)">(geo nhỏ, freq cao hơn)</small></td>
+          <td>≥ 20x / 2 tháng</td>
+          <td>Agent feedback: "user nhận ra" = proxy signal</td>
+        </tr>
+        <tr>
+          <td>L3 — POSM / Indoor</td>
+          <td>~400 impressions/điểm</td>
+          <td>—</td>
+          <td>Indoor boost +5-8% reach<br><small style="color:var(--text3)">(nhóm không commute)</small></td>
+          <td>Measure via overall BHT, không tách riêng</td>
+        </tr>
+        <tr>
+          <td>Digital retargeting</td>
+          <td>3-5 lần/user/week</td>
+          <td>Direct (không nhân 30%)</td>
+          <td>Cap: 7 lần/week</td>
+          <td>CPC tăng &gt;20% → expand audience / refresh creative</td>
+        </tr>
+        <tr>
+          <td>Social feed</td>
+          <td>2-3 lần/user/week</td>
+          <td>Direct</td>
+          <td>Cap: 5 lần/week</td>
+          <td>CTR drop &gt;30% → rotate creative</td>
+        </tr>
+      </table>
+      <div class="note" style="margin-top:8px">Benchmark SEA (Kantar/Millward Brown): 20-25x gross/tháng cho high-involvement category. Q12 OOH target: effective freq ≥ 10x/2 tháng, coverage ≥ 50% toàn quận.</div>
+    </div>
+  </div>
+</div>
+
+<!-- OOH LAYERS — order: L1 → L2 → L3 display, priority L2 > L1 > L3 -->
+<div class="sec" id="layers">
+  <div class="eyebrow">OOH Strategy</div>
+  <div class="heading">Layer Framework — Ưu tiên L2 → L3 → L1</div>
+  <div class="layer-grid">
+    <div class="lc lc-2">
+      <span class="priority-pill pp-must">Bắt buộc</span>
+      <div class="lc-badge lb2">Layer 2 — Niche khu phố</div>
+      <div class="lc-name">Hyper-local · Differentiation</div>
+      <div class="lc-where">📍 Đầu hẻm, ngã ba gần agent showcase listings — phân bổ theo agent cluster map</div>
+      <ul class="lc-rules">
+        <li>Tối thiểu 5 placements / 4 phường, chạy xuyên suốt 6 tháng</li>
+        <li>Focus phường có agent showcase cao → mở rộng sang phường supply cao nhưng chưa có showcase</li>
+        <li>OOH + Local Data + Ads listing phải <strong>sync cùng khu vực</strong></li>
+        <li>Thiếu L2 = campaign chỉ là awareness đơn thuần, mất differentiation</li>
+      </ul>
+    </div>
+    <div class="lc lc-3">
+      <span class="priority-pill pp-nice">Nice-to-have</span>
+      <div class="lc-badge lb3">Layer 3 — Điểm chạm đời thường</div>
+      <div class="lc-name">Reminder · Brand Recall</div>
+      <div class="lc-where">📍 Tiệm tạp hóa, tiệm thuốc, trạm xăng, tòa nhà, rạp chiếu phim</div>
+      <ul class="lc-rules">
+        <li>Activate khi budget OOH còn dư sau L2 + L1</li>
+        <li>Phân bổ proportionally: phường dân đông + listing nhiều → nhiều L3 hơn</li>
+        <li>Indoor boost: +5-8% reach nhóm không commute qua đường lớn</li>
+        <li>Content phù hợp context điểm chạm từng loại địa điểm</li>
+      </ul>
+    </div>
+    <div class="lc lc-1">
+      <span class="priority-pill pp-need">Cần thiết</span>
+      <div class="lc-badge lb1">Layer 1 — Mass</div>
+      <div class="lc-name">Awareness diện rộng · Coverage</div>
+      <div class="lc-where">📍 Đường lớn, vòng xuyến, ngã 5-6. Trường Chinh = trục chính (~220-320K OTS/ngày)</div>
+      <ul class="lc-rules">
+        <li>Tối thiểu <strong>50% budget OOH</strong> — backbone của coverage toàn quận</li>
+        <li>Tuyến đường 1: ~45-55% cư dân phường/tuần. Tuyến 2: +15-18% incremental</li>
+        <li>Chạy mạnh 2 tháng đầu, sau đó reduce và giữ L2 xuyên suốt</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- CRITICAL PATH -->
+<div class="sec" id="critical">
+  <div class="eyebrow">Execution Readiness</div>
+  <div class="heading">Critical Path & Hard Deadlines</div>
+  <div class="two-col">
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--q12)">Q12</div>
+      <ul class="cp-list">
+        <li class="cp-item"><div class="cp-dot dot-r"></div><div><div class="cp-date">30 Jun 🔴</div><div class="cp-task">OOH Aug booking LOCK</div><div class="cp-risk">Miss = không có OOH Heavy Aug, strategy sụp</div></div></li>
+        <li class="cp-item"><div class="cp-dot dot-w"></div><div><div class="cp-date">1–10 Jul ⚠️</div><div class="cp-task">10+ agent onboarded, 30+ video ready. App Q12 filter LIVE.</div><div class="cp-risk">Miss = launch rỗng content, paid traffic không convert</div></div></li>
+        <li class="cp-item"><div class="cp-dot dot-g"></div><div><div class="cp-date">13 Jul ✅</div><div class="cp-task">Big Boom Day 1: Social + Digital từ ngày đầu</div><div class="cp-risk">Check inventory threshold trước khi flip</div></div></li>
+        <li class="cp-item"><div class="cp-dot dot-g"></div><div><div class="cp-date">W2 Aug ✅</div><div class="cp-task">BHT Survey Wave 1 (n≥200 Q12)</div><div class="cp-risk">Recall &lt;30% → optimization trigger</div></div></li>
+        <li class="cp-item"><div class="cp-dot dot-g"></div><div><div class="cp-date">Sep 30 ✅</div><div class="cp-task">Q12 debrief + GV brief final + autopilot rules set</div><div class="cp-risk">Chậm → overlap kéo dài, team strain</div></div></li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--gv)">Gò Vấp</div>
+      <ul class="cp-list">
+        <li class="cp-item"><div class="cp-dot dot-g"></div><div><div class="cp-date">Aug–Sep ✅</div><div class="cp-task">Scout GV agent clusters (song song, 1 người)</div><div class="cp-risk">Dùng Q12 template, tiết kiệm thời gian</div></div></li>
+        <li class="cp-item"><div class="cp-dot dot-r"></div><div><div class="cp-date">30 Sep 🔴</div><div class="cp-task">GV OOH Nov booking LOCK</div><div class="cp-risk">Miss = không có OOH Heavy Nov GV</div></div></li>
+        <li class="cp-item"><div class="cp-dot dot-w"></div><div><div class="cp-date">1–10 Oct ⚠️</div><div class="cp-task">GV 10+ agent + 20+ video ready. App GV filter LIVE.</div><div class="cp-risk">Tận dụng Q12 template → faster ramp</div></div></li>
+        <li class="cp-item"><div class="cp-dot dot-g"></div><div><div class="cp-date">Mid Oct ✅</div><div class="cp-task">Lookalike từ Q12 pool → warm-up GV audience</div><div class="cp-risk">Start 2 tuần trước launch</div></div></li>
+        <li class="cp-item"><div class="cp-dot dot-g"></div><div><div class="cp-date">W3 Oct ✅</div><div class="cp-task">GV Big Boom Day 1</div><div class="cp-risk">Inventory check trước khi flip</div></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:28px;color:var(--text3);font-size:11px;border-top:1px solid var(--border)">
+  Thổ Địa Campaign v4 — Q12 & Gò Vấp 2026 · Nhà Tốt / MKT Director · Budget: 6,000M VND
+</div>
+
+<script>
+  function g(id) { document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'}); }
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.querySelectorAll('.tab')[name === 'q12' ? 0 : 1].classList.add('active');
+  }
+  const bars = document.querySelectorAll('.bar-fill');
+  const ws = [];
+  bars.forEach(b => { ws.push(b.style.width); b.style.width = '0'; });
+  setTimeout(() => { bars.forEach((b,i) => { b.style.width = ws[i]; }); }, 350);
+</script>
+</body>
+</html>
